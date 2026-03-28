@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Doan_QLTV.Froms;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,7 +17,7 @@ namespace Doan_QLTV
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FrmMain());
+            Application.Run(new FrmTaiKhoan());
         }
     }
 }

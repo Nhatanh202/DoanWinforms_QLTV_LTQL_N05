@@ -46,43 +46,63 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Forms\FrmDangNhap.cs" />
+    <Compile Include="Forms\FrmDangNhap.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\FrmDangNhap.Designer.cs">
       <DependentUpon>FrmDangNhap.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FrmDocGia.cs" />
+    <Compile Include="Forms\FrmDocGia.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\FrmDocGia.Designer.cs">
       <DependentUpon>FrmDocGia.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FrmMain.cs" />
+    <Compile Include="Forms\FrmMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\FrmMain.Designer.cs">
       <DependentUpon>FrmMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FrmMuonTraSach.cs" />
+    <Compile Include="Forms\FrmMuonTraSach.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\FrmMuonTraSach.Designer.cs">
       <DependentUpon>FrmMuonTraSach.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FrmNhanVien.cs" />
+    <Compile Include="Forms\FrmNhanVien.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\FrmNhanVien.Designer.cs">
       <DependentUpon>FrmNhanVien.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FrmSach.cs" />
+    <Compile Include="Forms\FrmSach.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\FrmSach.Designer.cs">
       <DependentUpon>FrmSach.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FrmTaiKhoan.cs" />
+    <Compile Include="Forms\FrmTaiKhoan.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\FrmTaiKhoan.Designer.cs">
       <DependentUpon>FrmTaiKhoan.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FrmTheLoai.cs" />
+    <Compile Include="Forms\FrmTheLoai.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\FrmTheLoai.Designer.cs">
       <DependentUpon>FrmTheLoai.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FrmThongKe.cs" />
+    <Compile Include="Forms\FrmThongKe.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\FrmThongKe.Designer.cs">
       <DependentUpon>FrmThongKe.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FrmTimKiem.cs" />
+    <Compile Include="Forms\FrmTimKiem.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\FrmTimKiem.Designer.cs">
       <DependentUpon>FrmTimKiem.cs</DependentUpon>
     </Compile>
