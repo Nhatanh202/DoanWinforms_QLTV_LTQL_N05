@@ -22,7 +22,7 @@ Phần mềm Quản lý Thư viện giúp số hóa quy trình mượn/trả sá
 
 | STT | Thành viên | Nhiệm vụ Code (WinForms & SQL) | Nhiệm vụ Báo cáo (Word/PPT) |
 |:---:|:---|:---|:---|
-| 1 | **[Tên Trưởng Nhóm]** (Leader)| Tạo khung Project, Class Kết nối CSDL. Code Form Mượn/Trả sách. Ghép code. | Sơ đồ CSDL (ERD), Lời mở đầu, Kết luận, Tổng hợp file Word. |
+| 1 | **Nhất Anh** | Tạo khung Project, Class Kết nối CSDL. Code Form Mượn/Trả sách. Ghép code. | Sơ đồ CSDL (ERD), Lời mở đầu, Kết luận, Tổng hợp file Word. |
 | 2 | **Đạt** | Code Form Đăng nhập, Phân quyền. Form Nhân viên (Xử lý ảnh `VARBINARY`), Tài khoản. | Chụp ảnh app, viết Hướng dẫn sử dụng (User Manual). |
 | 3 | **Khải** | Code Form Thể loại, Sách. Form Độc giả (Xử lý ảnh `STRING`). | Viết Sơ đồ Use-case (Đăng nhập, Thêm sách, Mượn trả...). |
 | 4 | **Hào** | Thiết kế UI/UX tổng thể. Code Form Tìm kiếm sách, Thống kê. | Viết Mô tả bài toán, dán ảnh giao diện và giải thích. |
