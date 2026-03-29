@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C2ED47AF-F658-0862-53DD-C37C0D900D9D}</ProjectGuid>
+    <ProjectGuid>{54A82141-42DB-48C3-9E95-35FC705F15DB}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>Doan_QLTV</RootNamespace>
     <AssemblyName>Doan_QLTV</AssemblyName>
@@ -109,6 +109,9 @@
     <Compile Include="Models\Database.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Forms\FrmMain.resx">
+      <DependentUpon>FrmMain.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
