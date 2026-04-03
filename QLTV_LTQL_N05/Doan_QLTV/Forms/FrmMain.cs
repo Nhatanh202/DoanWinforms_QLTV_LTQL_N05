@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Doan_QLTV
 {
-    public partial class frmMain : Form
+    public partial class Form1 : Form
     {
-        public frmMain()
+        public Form1()
         {
             InitializeComponent();
         }
