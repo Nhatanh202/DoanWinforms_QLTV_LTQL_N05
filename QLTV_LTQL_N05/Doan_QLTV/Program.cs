@@ -1,4 +1,6 @@
-﻿using Doan_QLTV.Froms;
+﻿
+using Doan_QLTV.Forms;
+using Doan_QLTV.Froms;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +19,7 @@ namespace Doan_QLTV
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FrmTaiKhoan());
+            Application.Run(new FrmChiTietPhieuMuon());
         }
     }
 }
