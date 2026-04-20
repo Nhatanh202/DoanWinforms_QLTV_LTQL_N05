@@ -1,16 +1,33 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
-<xs:schema id="QLTV" 
-                  targetNamespace="http://tempuri.org/QLTV.xsd"
-                  elementFormDefault="qualified"
-                  attributeFormDefault="qualified"
-                  xmlns="http://tempuri.org/QLTV.xsd"
-                  xmlns:mstns="http://tempuri.org/QLTV.xsd"
-                  xmlns:xs="http://www.w3.org/2001/XMLSchema"
-                  xmlns:msdata="urn:schemas-microsoft-com:xml-msdata"
-                  xmlns:msprop="urn:schemas-microsoft-com:xml-msprop">
-    <xs:element name="QLTV" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true">
-        <xs:complexType>
-            <xs:choice minOccurs="0" maxOccurs="unbounded"></xs:choice>
-        </xs:complexType>
-    </xs:element>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="QLTV" targetNamespace="http://tempuri.org/QLTV.xsd" xmlns:mstns="http://tempuri.org/QLTV.xsd" xmlns="http://tempuri.org/QLTV.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="QLTV" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_UserDSName="QLTV" msprop:Generator_DataSetName="QLTV">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="ChiTietPhieuMuon" msprop:Generator_RowEvHandlerName="ChiTietPhieuMuonRowChangeEventHandler" msprop:Generator_RowDeletedName="ChiTietPhieuMuonRowDeleted" msprop:Generator_RowDeletingName="ChiTietPhieuMuonRowDeleting" msprop:Generator_RowEvArgName="ChiTietPhieuMuonRowChangeEvent" msprop:Generator_TablePropName="ChiTietPhieuMuon" msprop:Generator_RowChangedName="ChiTietPhieuMuonRowChanged" msprop:Generator_RowChangingName="ChiTietPhieuMuonRowChanging" msprop:Generator_TableClassName="ChiTietPhieuMuonDataTable" msprop:Generator_RowClassName="ChiTietPhieuMuonRow" msprop:Generator_TableVarName="tableChiTietPhieuMuon" msprop:Generator_UserTableName="ChiTietPhieuMuon">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="MaPhieu" msprop:Generator_ColumnPropNameInRow="MaPhieu" msprop:Generator_ColumnPropNameInTable="MaPhieuColumn" msprop:Generator_ColumnVarNameInTable="columnMaPhieu" msprop:Generator_UserColumnName="MaPhieu" type="xs:string" minOccurs="0" />
+              <xs:element name="HoTen" msprop:Generator_ColumnPropNameInRow="HoTen" msprop:Generator_ColumnPropNameInTable="HoTenColumn" msprop:Generator_ColumnVarNameInTable="columnHoTen" msprop:Generator_UserColumnName="HoTen" type="xs:string" minOccurs="0" />
+              <xs:element name="TenSach" msprop:Generator_ColumnPropNameInRow="TenSach" msprop:Generator_ColumnPropNameInTable="TenSachColumn" msprop:Generator_ColumnVarNameInTable="columnTenSach" msprop:Generator_UserColumnName="TenSach" type="xs:string" minOccurs="0" />
+              <xs:element name="NgayMuon" msprop:Generator_ColumnPropNameInRow="NgayMuon" msprop:Generator_ColumnPropNameInTable="NgayMuonColumn" msprop:Generator_ColumnVarNameInTable="columnNgayMuon" msprop:Generator_UserColumnName="NgayMuon" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="NgayHenTra" msprop:Generator_ColumnPropNameInRow="NgayHenTra" msprop:Generator_ColumnPropNameInTable="NgayHenTraColumn" msprop:Generator_ColumnVarNameInTable="columnNgayHenTra" msprop:Generator_UserColumnName="NgayHenTra" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="NgayTraThucTe" msprop:Generator_ColumnPropNameInRow="NgayTraThucTe" msprop:Generator_ColumnPropNameInTable="NgayTraThucTeColumn" msprop:Generator_ColumnVarNameInTable="columnNgayTraThucTe" msprop:Generator_UserColumnName="NgayTraThucTe" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="TrangThaiTra" msprop:Generator_ColumnPropNameInRow="TrangThaiTra" msprop:Generator_ColumnPropNameInTable="TrangThaiTraColumn" msprop:Generator_ColumnVarNameInTable="columnTrangThaiTra" msprop:Generator_UserColumnName="TrangThaiTra" type="xs:string" minOccurs="0" />
+              <xs:element name="TinhTrangSach" msprop:Generator_ColumnPropNameInRow="TinhTrangSach" msprop:Generator_ColumnPropNameInTable="TinhTrangSachColumn" msprop:Generator_ColumnVarNameInTable="columnTinhTrangSach" msprop:Generator_UserColumnName="TinhTrangSach" type="xs:string" minOccurs="0" />
+              <xs:element name="GhiChu" msprop:Generator_ColumnPropNameInRow="GhiChu" msprop:Generator_ColumnPropNameInTable="GhiChuColumn" msprop:Generator_ColumnVarNameInTable="columnGhiChu" msprop:Generator_UserColumnName="GhiChu" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

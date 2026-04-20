@@ -422,22 +422,20 @@ namespace Doan_QLTV.Forms
 
             int maPhieuIn = (int)cboMaPhieu.SelectedValue;
 
-            // Câu lệnh SQL JOIN 4 bảng lấy dữ liệu in cho phiếu hiện tại
+            // Xóa nội dung: "WHERE PM.MaPhieu = {maPhieuIn}" ở cuối câu SQL
             string sqlIn = $@"
                 SELECT 
                     PM.MaPhieu, 
-                    DG.HoTenDocGia, 
+                    DG.HoTen AS HoTenDocGia, 
                     PM.NgayMuon, 
-                    PM.NgayTra AS NgayHenTra, 
+                    PM.NgayHenTra, 
                     S.TenSach, 
                     CT.NgayTraThucTe, 
                     CT.TinhTrangSach
                 FROM PhieuMuon PM
-                JOIN DocGia DG ON PM.MaDG = DG.MaDocGia -- Lưu ý: Vui lòng sửa lại Tên cột MaDG/MaDocGia/HoTenDocGia cho khớp 100% CSDL của bạn
+                JOIN DocGia DG ON PM.MaDocGia = DG.MaDocGia
                 JOIN ChiTietPhieuMuon CT ON PM.MaPhieu = CT.MaPhieu
-                JOIN Sach S ON CT.MaSach = S.MaSach
-                WHERE PM.MaPhieu = {maPhieuIn}";
-
+                JOIN Sach S ON CT.MaSach = S.MaSach";
             DataTable dtIn = db.laydl(sqlIn);
 
             if (dtIn == null || dtIn.Rows.Count == 0)
