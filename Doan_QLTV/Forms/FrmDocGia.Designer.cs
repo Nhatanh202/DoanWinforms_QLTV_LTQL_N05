@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmDocGia));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnDoiAnh = new System.Windows.Forms.Button();
             this.pbAnh = new System.Windows.Forms.PictureBox();
@@ -57,6 +58,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.BackColor = System.Drawing.Color.Transparent;
             this.groupBox1.Controls.Add(this.btnDoiAnh);
             this.groupBox1.Controls.Add(this.pbAnh);
             this.groupBox1.Controls.Add(this.btnThoat);
@@ -266,10 +268,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackgroundImage = global::Doan_QLTV.Properties.Resources.Gemini_Generated_Image_73fixz73fixz73fi;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ClientSize = new System.Drawing.Size(1339, 735);
             this.Controls.Add(this.dgvDocGia);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.groupBox1);
+            this.DoubleBuffered = true;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmDocGia";
             this.Text = "FrmDocGia";
             this.Load += new System.EventHandler(this.FrmDocGia_Load);

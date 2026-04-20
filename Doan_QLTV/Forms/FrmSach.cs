@@ -126,7 +126,52 @@ namespace Doan_QLTV.Froms
 
         private void btnLuu_Click(object sender, EventArgs e)
         {
+            // Kiểm tra rỗng
+            if (txtTenSach.Text.Trim() == "" ||
+                txtTacGia.Text.Trim() == "" ||
+                txtMaLoai.Text.Trim() == "" ||
+                txtSoLuongTon.Text.Trim() == "")
+            {
+                MessageBox.Show("Vui lòng nhập đầy đủ thông tin!");
+                return;
+            }
+
+            // Tác giả không được có số
+            if (txtTacGia.Text.Any(char.IsDigit))
+            {
+                MessageBox.Show("Tên tác giả không được chứa số!");
+                txtTacGia.Focus();
+                return;
+            }
+
+            // Năm xuất bản không vượt hiện tại
+            if (dtpNamSanXuat.Value.Year > DateTime.Now.Year)
+            {
+                MessageBox.Show("Năm xuất bản không được vượt quá năm hiện tại!");
+                return;
+            }
+
+            // Kiểm tra số lượng tồn
+            int soLuong;
+
+            if (!int.TryParse(txtSoLuongTon.Text, out soLuong))
+            {
+                MessageBox.Show("Số lượng tồn phải là số!");
+                txtSoLuongTon.Focus();
+                return;
+            }
+
+            if (soLuong < 0)
+            {
+                MessageBox.Show("Số lượng tồn không được âm!");
+                txtSoLuongTon.Focus();
+                return;
+            }
+
+            // ===== PHẦN LƯU DỮ LIỆU =====
+
             string sql = "";
+
             if (isThem)
             {
                 sql = "INSERT INTO Sach (TenSach, TacGia, MaLoai, NamXuatBan, SoLuongTon) " +
@@ -139,17 +184,20 @@ namespace Doan_QLTV.Froms
             }
 
             SqlCommand cmd = new SqlCommand(sql, db.cn);
+
             cmd.Parameters.AddWithValue("@ten", txtTenSach.Text);
             cmd.Parameters.AddWithValue("@tg", txtTacGia.Text);
             cmd.Parameters.AddWithValue("@loai", txtMaLoai.Text);
-            cmd.Parameters.AddWithValue("@nam", dtpNamSanXuat.Value.Year); // Lấy năm từ DateTimePicker
-            cmd.Parameters.AddWithValue("@sl", txtSoLuongTon.Text);
-            if (!isThem) cmd.Parameters.AddWithValue("@id", txtMaSach.Text);
+            cmd.Parameters.AddWithValue("@nam", dtpNamSanXuat.Value.Year);
+            cmd.Parameters.AddWithValue("@sl", soLuong);
+
+            if (!isThem)
+                cmd.Parameters.AddWithValue("@id", txtMaSach.Text);
 
             try
             {
                 db.thucthi(cmd);
-                MessageBox.Show("Cập nhật thành công!");
+                MessageBox.Show("Lưu thành công!");
                 LoadData();
                 SetControls(false);
             }

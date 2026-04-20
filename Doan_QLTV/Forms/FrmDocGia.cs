@@ -89,6 +89,8 @@ namespace Doan_QLTV.Froms
 
         private void FrmDocGia_Load(object sender, EventArgs e)
         {
+            dtpNgayLapThe.MaxDate = DateTime.Today;
+            dtpNgayLapThe.Value = DateTime.Today;
             setButton(true);
             LoadData(); 
         }
@@ -102,7 +104,7 @@ namespace Doan_QLTV.Froms
             txtHoTen.Text = "";
             txtEmail.Text = "";
             txtSDT.Text = "";
-            dtpNgayLapThe.Value = DateTime.Now;
+            dtpNgayLapThe.Value = DateTime.Today;
             if (pbAnh.Image != null) pbAnh.Image.Dispose();
             pbAnh.Image = null;
             pbAnh.Tag = null;
@@ -139,9 +141,54 @@ namespace Doan_QLTV.Froms
 
         private void btnLuu_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txtHoTen.Text))
+            // Kiểm tra rỗng
+            if (txtHoTen.Text.Trim() == "" ||
+                txtEmail.Text.Trim() == "" ||
+                txtSDT.Text.Trim() == "")
             {
-                MessageBox.Show("Vui lòng nhập tên độc giả!");
+                MessageBox.Show("Cần nhập đầy đủ thông tin!");
+                return;
+            }
+
+            // Kiểm tra chọn ảnh
+            if (pbAnh.Image == null)
+            {
+                MessageBox.Show("Vui lòng chọn ảnh!");
+                return;
+            }
+
+            // Họ tên không được có số
+            if (txtHoTen.Text.Any(char.IsDigit))
+            {
+                MessageBox.Show("Họ tên không được chứa số!");
+                return;
+            }
+
+            // Email phải có @
+            if (!txtEmail.Text.Contains("@"))
+            {
+                MessageBox.Show("Email không hợp lệ!");
+                return;
+            }
+
+            // SĐT chỉ được nhập số
+            if (!txtSDT.Text.All(char.IsDigit))
+            {
+                MessageBox.Show("Số điện thoại không được chứa chữ hoặc ký tự đặc biệt!");
+                txtSDT.Focus();
+                return;
+            }
+
+            if (txtSDT.Text.Length != 10)
+            {
+                MessageBox.Show("Số điện thoại phải có đúng 10 số!");
+                txtSDT.Focus();
+                return;
+            }
+
+            if (dtpNgayLapThe.Value > DateTime.Now)
+            {
+                MessageBox.Show("Ngày lập thẻ không được vượt quá thời điểm hiện tại!");
                 return;
             }
 
@@ -238,11 +285,12 @@ namespace Doan_QLTV.Froms
 
             if (row.Cells["NgayLapThe"].Value != DBNull.Value)
             {
-                dtpNgayLapThe.Value = Convert.ToDateTime(row.Cells["NgayLapThe"].Value);
+                dtpNgayLapThe.Value =
+                    Convert.ToDateTime(row.Cells["NgayLapThe"].Value).Date;
             }
             else
             {
-                dtpNgayLapThe.Value = DateTime.Now;
+                dtpNgayLapThe.Value = DateTime.Today;
             }
 
             // Thêm phần hiển thị ảnh lên PictureBox khi click vào dòng
