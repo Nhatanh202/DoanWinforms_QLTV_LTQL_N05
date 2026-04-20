@@ -67,3 +67,4 @@ D:\0_This_Is_Your_Storage\0_Programming\LTQL\DoAN\Doan_QLTV\obj\Debug\Doan_QLTV.
 D:\0_This_Is_Your_Storage\0_Programming\LTQL\DoAN\Doan_QLTV\obj\Debug\Doan_QLTV.csproj.Up2Date
 D:\0_This_Is_Your_Storage\0_Programming\LTQL\DoAN\Doan_QLTV\obj\Debug\Doan_QLTV.exe
 D:\0_This_Is_Your_Storage\0_Programming\LTQL\DoAN\Doan_QLTV\obj\Debug\Doan_QLTV.pdb
+D:\0_This_Is_Your_Storage\0_Programming\LTQL\DoAN\Doan_QLTV\obj\Debug\Doan_QLTV.Froms.FrmTimKiem.resources
