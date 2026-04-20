@@ -22,7 +22,7 @@ namespace Doan_QLTV.Froms
             // TextBox
             txtTenSach.Enabled = edit;
             txtTacGia.Enabled = edit;
-            txtMaLoai.Enabled = edit;
+            cboTenLoaiSach.Enabled = edit;
             txtSoLuongTon.Enabled = edit;
             dtpNamSanXuat.Enabled = edit;
 
@@ -37,7 +37,18 @@ namespace Doan_QLTV.Froms
 
         void LoadData()
         {
-            string sql = "SELECT * FROM Sach";
+            string sql = @"
+            SELECT 
+                s.MaSach,
+                s.TenSach,
+                s.TacGia,
+                s.MaLoai,
+                tl.TenLoai,
+                s.NamXuatBan,
+                s.SoLuongTon
+            FROM Sach s
+            INNER JOIN TheLoai tl ON s.MaLoai = tl.MaLoai";
+
             dgvThongTinSach.DataSource = db.laydl(sql);
         }
         public FrmSach()
@@ -45,10 +56,26 @@ namespace Doan_QLTV.Froms
             InitializeComponent();
         }
 
+        void LoadLoaiSach()
+        {
+            string sql = @"
+        SELECT 
+            MaLoai,
+            CAST(MaLoai AS NVARCHAR(10)) + ' - ' + TenLoai AS HienThi
+        FROM TheLoai";
+
+            DataTable dt = db.laydl(sql);
+
+            cboTenLoaiSach.DataSource = dt;
+            cboTenLoaiSach.DisplayMember = "HienThi"; // hiện Mã + Tên
+            cboTenLoaiSach.ValueMember = "MaLoai";    // giá trị thật
+        }
+
         private void FrmSach_Load(object sender, EventArgs e)
         {
             try 
             {
+                LoadLoaiSach();
                 LoadData();
             }
             catch (Exception ex)
@@ -65,7 +92,7 @@ namespace Doan_QLTV.Froms
                 txtMaSach.Text = row.Cells["MaSach"].Value.ToString();
                 txtTenSach.Text = row.Cells["TenSach"].Value.ToString();
                 txtTacGia.Text = row.Cells["TacGia"].Value.ToString();
-                txtMaLoai.Text = row.Cells["MaLoai"].Value.ToString();
+                cboTenLoaiSach.SelectedValue = row.Cells["MaLoai"].Value;
                 txtSoLuongTon.Text = row.Cells["SoLuongTon"].Value.ToString();
 
 
@@ -100,6 +127,7 @@ namespace Doan_QLTV.Froms
             txtTacGia.Text = "";
             txtSoLuongTon.Text = "0";
             txtTenSach.Focus();
+            cboTenLoaiSach.SelectedIndex = 0;
         }
 
         private void btnSua_Click(object sender, EventArgs e)
@@ -126,17 +154,17 @@ namespace Doan_QLTV.Froms
 
         private void btnLuu_Click(object sender, EventArgs e)
         {
-            // Kiểm tra rỗng
+            // kiểm tra rỗng
             if (txtTenSach.Text.Trim() == "" ||
                 txtTacGia.Text.Trim() == "" ||
-                txtMaLoai.Text.Trim() == "" ||
-                txtSoLuongTon.Text.Trim() == "")
+                txtSoLuongTon.Text.Trim() == "" ||
+                cboTenLoaiSach.SelectedIndex == -1)
             {
                 MessageBox.Show("Vui lòng nhập đầy đủ thông tin!");
                 return;
             }
 
-            // Tác giả không được có số
+            // tác giả không chứa số
             if (txtTacGia.Text.Any(char.IsDigit))
             {
                 MessageBox.Show("Tên tác giả không được chứa số!");
@@ -144,66 +172,73 @@ namespace Doan_QLTV.Froms
                 return;
             }
 
-            // Năm xuất bản không vượt hiện tại
+            // năm xuất bản
             if (dtpNamSanXuat.Value.Year > DateTime.Now.Year)
             {
-                MessageBox.Show("Năm xuất bản không được vượt quá năm hiện tại!");
+                MessageBox.Show("Năm xuất bản không hợp lệ!");
                 return;
             }
 
-            // Kiểm tra số lượng tồn
-            int soLuong;
-
-            if (!int.TryParse(txtSoLuongTon.Text, out soLuong))
+            // số lượng
+            int sl;
+            if (!int.TryParse(txtSoLuongTon.Text, out sl))
             {
                 MessageBox.Show("Số lượng tồn phải là số!");
                 txtSoLuongTon.Focus();
                 return;
             }
 
-            if (soLuong < 0)
+            if (sl < 0)
             {
                 MessageBox.Show("Số lượng tồn không được âm!");
-                txtSoLuongTon.Focus();
                 return;
             }
 
-            // ===== PHẦN LƯU DỮ LIỆU =====
-
-            string sql = "";
-
-            if (isThem)
-            {
-                sql = "INSERT INTO Sach (TenSach, TacGia, MaLoai, NamXuatBan, SoLuongTon) " +
-                      "VALUES (@ten, @tg, @loai, @nam, @sl)";
-            }
-            else
-            {
-                sql = "UPDATE Sach SET TenSach=@ten, TacGia=@tg, MaLoai=@loai, " +
-                      "NamXuatBan=@nam, SoLuongTon=@sl WHERE MaSach=@id";
-            }
-
-            SqlCommand cmd = new SqlCommand(sql, db.cn);
-
-            cmd.Parameters.AddWithValue("@ten", txtTenSach.Text);
-            cmd.Parameters.AddWithValue("@tg", txtTacGia.Text);
-            cmd.Parameters.AddWithValue("@loai", txtMaLoai.Text);
-            cmd.Parameters.AddWithValue("@nam", dtpNamSanXuat.Value.Year);
-            cmd.Parameters.AddWithValue("@sl", soLuong);
-
-            if (!isThem)
-                cmd.Parameters.AddWithValue("@id", txtMaSach.Text);
-
             try
             {
+                SqlCommand cmd;
+
+                if (isThem)
+                {
+                    string sql = @"
+                        INSERT INTO Sach
+                        (TenSach, TacGia, MaLoai, NamXuatBan, SoLuongTon)
+                        VALUES
+                        (@ten, @tg, @loai, @nam, @sl)";
+
+                    cmd = new SqlCommand(sql, db.cn);
+                }
+                else
+                {
+                    string sql = @"
+                        UPDATE Sach SET
+                        TenSach=@ten,
+                        TacGia=@tg,
+                        MaLoai=@loai,
+                        NamXuatBan=@nam,
+                        SoLuongTon=@sl
+                        WHERE MaSach=@id";
+
+                    cmd = new SqlCommand(sql, db.cn);
+                    cmd.Parameters.AddWithValue("@id", txtMaSach.Text);
+                }
+
+                cmd.Parameters.AddWithValue("@ten", txtTenSach.Text);
+                cmd.Parameters.AddWithValue("@tg", txtTacGia.Text);
+                cmd.Parameters.AddWithValue("@loai", cboTenLoaiSach.SelectedValue);
+                cmd.Parameters.AddWithValue("@nam", dtpNamSanXuat.Value.Year);
+                cmd.Parameters.AddWithValue("@sl", sl);
+
                 db.thucthi(cmd);
+
                 MessageBox.Show("Lưu thành công!");
+
                 LoadData();
                 SetControls(false);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi: " + ex.Message);
+                MessageBox.Show("Lỗi lưu: " + ex.Message);
             }
         }
 

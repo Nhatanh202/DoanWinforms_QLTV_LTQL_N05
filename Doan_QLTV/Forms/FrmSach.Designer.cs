@@ -38,7 +38,6 @@
             this.btnSua = new System.Windows.Forms.Button();
             this.btnThem = new System.Windows.Forms.Button();
             this.dtpNamSanXuat = new System.Windows.Forms.DateTimePicker();
-            this.txtMaLoai = new System.Windows.Forms.TextBox();
             this.txtTenSach = new System.Windows.Forms.TextBox();
             this.txtMaSach = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -51,12 +50,14 @@
             this.label7 = new System.Windows.Forms.Label();
             this.btnLuu = new System.Windows.Forms.Button();
             this.txtTacGia = new System.Windows.Forms.TextBox();
+            this.cboTenLoaiSach = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvThongTinSach)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // dgvThongTinSach
             // 
+            this.dgvThongTinSach.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvThongTinSach.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvThongTinSach.Location = new System.Drawing.Point(12, 383);
             this.dgvThongTinSach.Name = "dgvThongTinSach";
@@ -135,13 +136,6 @@
             this.dtpNamSanXuat.Size = new System.Drawing.Size(195, 30);
             this.dtpNamSanXuat.TabIndex = 9;
             // 
-            // txtMaLoai
-            // 
-            this.txtMaLoai.Location = new System.Drawing.Point(168, 106);
-            this.txtMaLoai.Name = "txtMaLoai";
-            this.txtMaLoai.Size = new System.Drawing.Size(195, 30);
-            this.txtMaLoai.TabIndex = 7;
-            // 
             // txtTenSach
             // 
             this.txtTenSach.Location = new System.Drawing.Point(622, 50);
@@ -151,6 +145,7 @@
             // 
             // txtMaSach
             // 
+            this.txtMaSach.Enabled = false;
             this.txtMaSach.Location = new System.Drawing.Point(168, 46);
             this.txtMaSach.Name = "txtMaSach";
             this.txtMaSach.Size = new System.Drawing.Size(195, 30);
@@ -179,9 +174,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(26, 106);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(73, 23);
+            this.label3.Size = new System.Drawing.Size(119, 23);
             this.label3.TabIndex = 2;
-            this.label3.Text = "Mã loại";
+            this.label3.Text = "Tên loại sách";
             // 
             // label2
             // 
@@ -204,6 +199,7 @@
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox1.Controls.Add(this.cboTenLoaiSach);
             this.groupBox1.Controls.Add(this.txtSoLuongTon);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.btnThoat);
@@ -214,7 +210,6 @@
             this.groupBox1.Controls.Add(this.btnThem);
             this.groupBox1.Controls.Add(this.dtpNamSanXuat);
             this.groupBox1.Controls.Add(this.txtTacGia);
-            this.groupBox1.Controls.Add(this.txtMaLoai);
             this.groupBox1.Controls.Add(this.txtTenSach);
             this.groupBox1.Controls.Add(this.txtMaSach);
             this.groupBox1.Controls.Add(this.label5);
@@ -263,6 +258,14 @@
             this.txtTacGia.Size = new System.Drawing.Size(195, 30);
             this.txtTacGia.TabIndex = 8;
             // 
+            // cboTenLoaiSach
+            // 
+            this.cboTenLoaiSach.FormattingEnabled = true;
+            this.cboTenLoaiSach.Location = new System.Drawing.Point(168, 106);
+            this.cboTenLoaiSach.Name = "cboTenLoaiSach";
+            this.cboTenLoaiSach.Size = new System.Drawing.Size(195, 31);
+            this.cboTenLoaiSach.TabIndex = 18;
+            // 
             // FrmSach
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -297,7 +300,6 @@
         private System.Windows.Forms.Button btnSua;
         private System.Windows.Forms.Button btnThem;
         private System.Windows.Forms.DateTimePicker dtpNamSanXuat;
-        private System.Windows.Forms.TextBox txtMaLoai;
         private System.Windows.Forms.TextBox txtTenSach;
         private System.Windows.Forms.TextBox txtMaSach;
         private System.Windows.Forms.Label label5;
@@ -310,5 +312,6 @@
         private System.Windows.Forms.TextBox txtTacGia;
         private System.Windows.Forms.TextBox txtSoLuongTon;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ComboBox cboTenLoaiSach;
     }
 }

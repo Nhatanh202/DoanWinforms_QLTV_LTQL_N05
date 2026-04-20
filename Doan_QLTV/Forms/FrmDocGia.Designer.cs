@@ -193,6 +193,7 @@
             // 
             // txtMaDocGia
             // 
+            this.txtMaDocGia.Enabled = false;
             this.txtMaDocGia.Location = new System.Drawing.Point(168, 46);
             this.txtMaDocGia.Name = "txtMaDocGia";
             this.txtMaDocGia.Size = new System.Drawing.Size(195, 30);
@@ -255,6 +256,7 @@
             // 
             // dgvDocGia
             // 
+            this.dgvDocGia.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvDocGia.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvDocGia.Location = new System.Drawing.Point(12, 383);
             this.dgvDocGia.Name = "dgvDocGia";

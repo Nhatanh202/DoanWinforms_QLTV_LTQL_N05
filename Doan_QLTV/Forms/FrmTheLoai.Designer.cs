@@ -172,6 +172,7 @@
             // 
             // dgvTheLoai
             // 
+            this.dgvTheLoai.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvTheLoai.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvTheLoai.Location = new System.Drawing.Point(12, 243);
             this.dgvTheLoai.Name = "dgvTheLoai";
