@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ClosedXML.Excel;
 
 namespace Doan_QLTV.Froms
 {
@@ -147,6 +148,94 @@ namespace Doan_QLTV.Froms
                 DataGridViewRow row = dgvTheLoai.Rows[e.RowIndex];
                 txtMaTheLoai.Text = row.Cells[0].Value.ToString();
                 txtTenTheLoai.Text = row.Cells[1].Value.ToString();
+            }
+        }
+
+        private void btnNhap_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Title = "Nhập dữ liệu từ file Excel";
+            ofd.Filter = "Tập tin Excel|*.xls;*.xlsx";
+
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                DataTable dt = new DataTable();
+
+                XLWorkbook workbook = new XLWorkbook(ofd.FileName);
+                IXLWorksheet worksheet = workbook.Worksheet(1);
+
+                bool firstRow = true;
+
+                foreach (IXLRow row in worksheet.RowsUsed())
+                {
+                    if (firstRow)
+                    {
+                        foreach (IXLCell cell in row.Cells())
+                            dt.Columns.Add(cell.Value.ToString());
+                        firstRow = false;
+                    }
+                    else
+                    {
+                        dt.Rows.Add();
+                        int i = 0;
+
+                        foreach (IXLCell cell in row.Cells(1, dt.Columns.Count))
+                        {
+                            dt.Rows[dt.Rows.Count - 1][i] = cell.Value.ToString();
+                            i++;
+                        }
+                    }
+                }
+
+                if (dt.Rows.Count == 0)
+                {
+                    MessageBox.Show("Tập tin Excel rỗng");
+                    return;
+                }
+
+                foreach (DataRow r in dt.Rows)
+                {
+                    string tenLoai = dt.Columns.Contains("TenLoai") ? r["TenLoai"].ToString() : (dt.Columns.Count > 1 ? r[1].ToString() : "");
+                    if (string.IsNullOrEmpty(tenLoai) && dt.Columns.Count == 1) {
+                        tenLoai = r[0].ToString();
+                    }
+                    
+                    if (!string.IsNullOrWhiteSpace(tenLoai))
+                    {
+                        string sql = $"INSERT INTO TheLoai (TenLoai) VALUES (N'{tenLoai}')";
+                        SqlCommand cmd = new SqlCommand(sql, db.cn);
+                        db.thucthi(cmd);
+                    }
+                }
+
+                MessageBox.Show("Đã import thành công!");
+                FrmTheLoai_Load(sender, e);
+            }
+        }
+
+        private void btnXuat_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "Excel Files|*.xlsx";
+            sfd.Title = "Xuất dữ liệu ra file Excel";
+            sfd.FileName = "DanhSachTheLoai.xlsx";
+
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    using (XLWorkbook workbook = new XLWorkbook())
+                    {
+                        DataTable dt = db.laydl("SELECT MaLoai as [Mã Loại], TenLoai as [Tên Thể Loại] FROM TheLoai");
+                        workbook.Worksheets.Add(dt, "TheLoai");
+                        workbook.SaveAs(sfd.FileName);
+                    }
+                    MessageBox.Show("Xuất file Excel thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi xuất file: " + ex.Message);
+                }
             }
         }
     }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -9,13 +9,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ClosedXML.Excel;
 
 namespace Doan_QLTV.Froms
 {
     public partial class FrmDocGia : Form
     {
 
-        Database db = new Database("DESKTOP-LESSMLI\\SQLEXPRESS", "QuanLyThuVien");
+        Database db = new Database("ADMIN-PC\\SQLEXPRESS", "QuanLyThuVien");
         bool xulyThem = false;
         string id; // Lưu MaDocGia đang chọn
 
@@ -260,6 +261,93 @@ namespace Doan_QLTV.Froms
         }
 
         
+        
+
+        private void btnNhap_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Title = "Nhập dữ liệu từ file Excel";
+            ofd.Filter = "Tập tin Excel|*.xls;*.xlsx";
+
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                DataTable dt = new DataTable();
+
+                XLWorkbook workbook = new XLWorkbook(ofd.FileName);
+                IXLWorksheet worksheet = workbook.Worksheet(1);
+
+                bool firstRow = true;
+
+                foreach (IXLRow row in worksheet.RowsUsed())
+                {
+                    if (firstRow)
+                    {
+                        foreach (IXLCell cell in row.Cells())
+                            dt.Columns.Add(cell.Value.ToString());
+                        firstRow = false;
+                    }
+                    else
+                    {
+                        dt.Rows.Add();
+                        int i = 0;
+
+                        foreach (IXLCell cell in row.Cells(1, dt.Columns.Count))
+                        {
+                            dt.Rows[dt.Rows.Count - 1][i] = cell.Value.ToString();
+                            i++;
+                        }
+                    }
+                }
+
+                if (dt.Rows.Count == 0)
+                {
+                    MessageBox.Show("Tập tin Excel rỗng");
+                    return;
+                }
+
+                foreach (DataRow r in dt.Rows)
+                {
+                    string hoten = dt.Columns.Contains("HoTen") ? r["HoTen"].ToString() : "";
+                    string email = dt.Columns.Contains("Email") ? r["Email"].ToString() : "";
+                    string sdt = dt.Columns.Contains("SoDienThoai") ? r["SoDienThoai"].ToString() : "";
+                    
+                    if (!string.IsNullOrWhiteSpace(hoten))
+                    {
+                        string sql = $"INSERT INTO DocGia (HoTen, Email, SoDienThoai) VALUES (N'{hoten}', N'{email}', '{sdt}')";
+                        SqlCommand cmd = new SqlCommand(sql, db.cn);
+                        db.thucthi(cmd);
+                    }
+                }
+
+                MessageBox.Show("Đã import thành công!");
+                FrmDocGia_Load(sender, e);
+            }
+        }
+
+        private void btnXuat_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "Excel Files|*.xlsx";
+            sfd.Title = "Xuất dữ liệu ra file Excel";
+            sfd.FileName = "DanhSachDocGia.xlsx";
+
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    using (XLWorkbook workbook = new XLWorkbook())
+                    {
+                        DataTable dt = db.laydl("SELECT MaDocGia, HoTen, Email, SoDienThoai, NgayLapThe FROM DocGia");
+                        workbook.Worksheets.Add(dt, "Data");
+                        workbook.SaveAs(sfd.FileName);
+                    }
+                    MessageBox.Show("Xuất file Excel thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi xuất file: " + ex.Message);
+                }
+            }
+        }
     }
-    
 }

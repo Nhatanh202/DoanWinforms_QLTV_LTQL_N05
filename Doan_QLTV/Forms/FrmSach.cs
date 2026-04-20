@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ClosedXML.Excel;
 
 namespace Doan_QLTV.Froms
 {
@@ -15,7 +16,7 @@ namespace Doan_QLTV.Froms
     {
 
         bool isThem = false; // Kiểm tra xem đang ở chế độ Thêm hay Sửa
-        Database db = new Database("DESKTOP-LESSMLI\\SQLEXPRESS", "QuanLyThuVien");
+        Database db = new Database("ADMIN-PC\\SQLEXPRESS", "QuanLyThuVien");
 
         void SetControls(bool edit)
         {
@@ -168,6 +169,95 @@ namespace Doan_QLTV.Froms
         private void btnThoat_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void btnNhap_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Title = "Nhập dữ liệu từ file Excel";
+            ofd.Filter = "Tập tin Excel|*.xls;*.xlsx";
+
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                DataTable dt = new DataTable();
+
+                XLWorkbook workbook = new XLWorkbook(ofd.FileName);
+                IXLWorksheet worksheet = workbook.Worksheet(1);
+
+                bool firstRow = true;
+
+                foreach (IXLRow row in worksheet.RowsUsed())
+                {
+                    if (firstRow)
+                    {
+                        foreach (IXLCell cell in row.Cells())
+                            dt.Columns.Add(cell.Value.ToString());
+                        firstRow = false;
+                    }
+                    else
+                    {
+                        dt.Rows.Add();
+                        int i = 0;
+
+                        foreach (IXLCell cell in row.Cells(1, dt.Columns.Count))
+                        {
+                            dt.Rows[dt.Rows.Count - 1][i] = cell.Value.ToString();
+                            i++;
+                        }
+                    }
+                }
+
+                if (dt.Rows.Count == 0)
+                {
+                    MessageBox.Show("Tập tin Excel rỗng");
+                    return;
+                }
+
+                foreach (DataRow r in dt.Rows)
+                {
+                    string tenSach = dt.Columns.Contains("TenSach") ? r["TenSach"].ToString() : "";
+                    string tacGia = dt.Columns.Contains("TacGia") ? r["TacGia"].ToString() : "";
+                    string maLoai = dt.Columns.Contains("MaLoai") ? r["MaLoai"].ToString() : "";
+                    string namXuatBan = dt.Columns.Contains("NamXuatBan") ? r["NamXuatBan"].ToString() : "";
+                    string soLuongTon = dt.Columns.Contains("SoLuongTon") ? r["SoLuongTon"].ToString() : "";
+                    
+                    if (!string.IsNullOrWhiteSpace(tenSach))
+                    {
+                        string sql = $"INSERT INTO Sach (TenSach, TacGia, MaLoai, NamXuatBan, SoLuongTon) VALUES (N'{tenSach}', N'{tacGia}', '{maLoai}', '{namXuatBan}', '{soLuongTon}')";
+                        SqlCommand cmd = new SqlCommand(sql, db.cn);
+                        db.thucthi(cmd);
+                    }
+                }
+
+                MessageBox.Show("Đã import thành công!");
+                FrmSach_Load(sender, e);
+            }
+        }
+
+        private void btnXuat_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "Excel Files|*.xlsx";
+            sfd.Title = "Xuất dữ liệu ra file Excel";
+            sfd.FileName = "DanhSachSach.xlsx";
+
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    using (XLWorkbook workbook = new XLWorkbook())
+                    {
+                        DataTable dt = db.laydl("SELECT * FROM Sach");
+                        workbook.Worksheets.Add(dt, "Sach");
+                        workbook.SaveAs(sfd.FileName);
+                    }
+                    MessageBox.Show("Xuất file Excel thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi xuất file: " + ex.Message);
+                }
+            }
         }
     }
 }
