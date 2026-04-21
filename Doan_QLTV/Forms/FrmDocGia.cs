@@ -89,6 +89,7 @@ namespace Doan_QLTV.Froms
 
         private void FrmDocGia_Load(object sender, EventArgs e)
         {
+            pbAnh.SizeMode = PictureBoxSizeMode.Zoom;
             dtpNgayLapThe.MaxDate = DateTime.Today;
             dtpNgayLapThe.Value = DateTime.Today;
             setButton(true);

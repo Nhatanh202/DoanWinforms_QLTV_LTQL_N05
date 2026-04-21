@@ -97,6 +97,7 @@
             // 
             // pbAnh
             // 
+            this.pbAnh.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.pbAnh.Location = new System.Drawing.Point(910, 29);
             this.pbAnh.Name = "pbAnh";
             this.pbAnh.Size = new System.Drawing.Size(234, 262);

@@ -46,13 +46,16 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cboTenLoaiSach = new System.Windows.Forms.ComboBox();
             this.txtSoLuongTon = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.btnLuu = new System.Windows.Forms.Button();
             this.txtTacGia = new System.Windows.Forms.TextBox();
-            this.cboTenLoaiSach = new System.Windows.Forms.ComboBox();
+            this.btnDoiAnh = new System.Windows.Forms.Button();
+            this.pbAnh = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvThongTinSach)).BeginInit();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbAnh)).BeginInit();
             this.SuspendLayout();
             // 
             // dgvThongTinSach
@@ -63,7 +66,7 @@
             this.dgvThongTinSach.Name = "dgvThongTinSach";
             this.dgvThongTinSach.RowHeadersWidth = 51;
             this.dgvThongTinSach.RowTemplate.Height = 24;
-            this.dgvThongTinSach.Size = new System.Drawing.Size(887, 340);
+            this.dgvThongTinSach.Size = new System.Drawing.Size(1307, 340);
             this.dgvThongTinSach.TabIndex = 22;
             this.dgvThongTinSach.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvThongTinSach_CellClick);
             // 
@@ -199,6 +202,8 @@
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox1.Controls.Add(this.btnDoiAnh);
+            this.groupBox1.Controls.Add(this.pbAnh);
             this.groupBox1.Controls.Add(this.cboTenLoaiSach);
             this.groupBox1.Controls.Add(this.txtSoLuongTon);
             this.groupBox1.Controls.Add(this.label7);
@@ -220,10 +225,18 @@
             this.groupBox1.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(887, 314);
+            this.groupBox1.Size = new System.Drawing.Size(1307, 314);
             this.groupBox1.TabIndex = 20;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Thông tin sách";
+            // 
+            // cboTenLoaiSach
+            // 
+            this.cboTenLoaiSach.FormattingEnabled = true;
+            this.cboTenLoaiSach.Location = new System.Drawing.Point(168, 106);
+            this.cboTenLoaiSach.Name = "cboTenLoaiSach";
+            this.cboTenLoaiSach.Size = new System.Drawing.Size(195, 31);
+            this.cboTenLoaiSach.TabIndex = 18;
             // 
             // txtSoLuongTon
             // 
@@ -258,20 +271,31 @@
             this.txtTacGia.Size = new System.Drawing.Size(195, 30);
             this.txtTacGia.TabIndex = 8;
             // 
-            // cboTenLoaiSach
+            // btnDoiAnh
             // 
-            this.cboTenLoaiSach.FormattingEnabled = true;
-            this.cboTenLoaiSach.Location = new System.Drawing.Point(168, 106);
-            this.cboTenLoaiSach.Name = "cboTenLoaiSach";
-            this.cboTenLoaiSach.Size = new System.Drawing.Size(195, 31);
-            this.cboTenLoaiSach.TabIndex = 18;
+            this.btnDoiAnh.Location = new System.Drawing.Point(1179, 34);
+            this.btnDoiAnh.Name = "btnDoiAnh";
+            this.btnDoiAnh.Size = new System.Drawing.Size(102, 257);
+            this.btnDoiAnh.TabIndex = 20;
+            this.btnDoiAnh.Text = "Đổi ảnh";
+            this.btnDoiAnh.UseVisualStyleBackColor = true;
+            this.btnDoiAnh.Click += new System.EventHandler(this.btnDoiAnh_Click);
+            // 
+            // pbAnh
+            // 
+            this.pbAnh.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pbAnh.Location = new System.Drawing.Point(913, 29);
+            this.pbAnh.Name = "pbAnh";
+            this.pbAnh.Size = new System.Drawing.Size(234, 262);
+            this.pbAnh.TabIndex = 19;
+            this.pbAnh.TabStop = false;
             // 
             // FrmSach
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackgroundImage = global::Doan_QLTV.Properties.Resources.Gemini_Generated_Image_73fixz73fixz73fi;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(933, 742);
+            this.ClientSize = new System.Drawing.Size(1338, 742);
             this.Controls.Add(this.dgvThongTinSach);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.groupBox1);
@@ -284,6 +308,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvThongTinSach)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbAnh)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -313,5 +338,7 @@
         private System.Windows.Forms.TextBox txtSoLuongTon;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox cboTenLoaiSach;
+        private System.Windows.Forms.Button btnDoiAnh;
+        private System.Windows.Forms.PictureBox pbAnh;
     }
 }
