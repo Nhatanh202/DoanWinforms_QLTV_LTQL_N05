@@ -19,7 +19,7 @@ namespace Doan_QLTV
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FrmChiTietPhieuMuon());
+            Application.Run(new FrmMuonTraSach());
         }
     }
 }

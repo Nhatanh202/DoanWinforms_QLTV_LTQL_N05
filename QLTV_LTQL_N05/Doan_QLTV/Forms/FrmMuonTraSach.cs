@@ -231,19 +231,24 @@ namespace Doan_QLTV.Froms
             {
                 try
                 {
+                    if (db.cn.State == ConnectionState.Closed) db.cn.Open();
+
                     // Lấy mã phiếu từ dòng đang chọn (Cột 0)
                     int maPhieuXoa = Convert.ToInt32(dgvMuonTra.CurrentRow.Cells[0].Value);
 
-                    // 3. Sử dụng SqlCommand với tham số @MaP (Cách 2)
-                    // Lưu ý: Nếu có Ràng buộc khóa ngoại, bạn phải xóa ChiTietPhieuMuon trước 
-                    // hoặc thiết kế DB có Cascade Delete.
-                    string sql = "DELETE FROM PhieuMuon WHERE MaPhieu = @MaP";
+                    // Xóa chi tiết phiếu mượn trước (Ràng buộc khóa ngoại)
+                    string sqlXoaChiTiet = "DELETE FROM ChiTietPhieuMuon WHERE MaPhieu = @MaP";
+                    SqlCommand cmdChiTiet = new SqlCommand(sqlXoaChiTiet, db.cn);
+                    cmdChiTiet.Parameters.AddWithValue("@MaP", maPhieuXoa);
+                    cmdChiTiet.ExecuteNonQuery();
 
+                    // Sau đó mới xóa phiếu mượn
+                    string sql = "DELETE FROM PhieuMuon WHERE MaPhieu = @MaP";
                     SqlCommand cmd = new SqlCommand(sql, db.cn);
                     cmd.Parameters.AddWithValue("@MaP", maPhieuXoa);
+                    cmd.ExecuteNonQuery();
 
-                    // 4. Thực thi
-                    db.thucthi(cmd);
+                    db.cn.Close();
 
                     MessageBox.Show("Đã xóa phiếu mượn thành công!", "Thành công");
 
@@ -252,6 +257,7 @@ namespace Doan_QLTV.Froms
                 }
                 catch (Exception ex)
                 {
+                    if (db.cn.State == ConnectionState.Open) db.cn.Close();
                     // Nếu Trigger trg_KhongXoaDocGia hoặc các ràng buộc khác chặn lại, lỗi sẽ hiện ở đây
                     MessageBox.Show("Không thể xóa phiếu mượn này! \nLỗi chi tiết: " + ex.Message,
                                     "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);

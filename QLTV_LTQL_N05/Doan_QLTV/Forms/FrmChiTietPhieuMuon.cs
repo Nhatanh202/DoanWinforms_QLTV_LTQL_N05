@@ -350,7 +350,7 @@ namespace Doan_QLTV.Forms
                 return;
             }
 
-            DialogResult dr = MessageBox.Show("Bạn có chắc muốn xóa chi tiết phiếu mượn này?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult dr = MessageBox.Show("Bạn có chắc muốn xóa chi tiết sách mượn này?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (dr == DialogResult.Yes)
             {
                 try
@@ -358,7 +358,9 @@ namespace Doan_QLTV.Forms
                     string sql = "DELETE FROM ChiTietPhieuMuon WHERE MaPhieu = @MaPM AND MaSach = @MaS";
                     SqlCommand cmd = new SqlCommand(sql, db.cn);
                     cmd.Parameters.AddWithValue("@MaPM", cboMaPhieu.SelectedValue);
-                    cmd.Parameters.AddWithValue("@MaS", cboMaSach.SelectedValue);
+
+                    // Lấy mã sách thực tế đang chọn trên Grid để xóa, thay vì lấy từ Combobox (nếu Combobox đang chọn nhầm/sai)
+                    cmd.Parameters.AddWithValue("@MaS", dtgChiTietPM.CurrentRow.Cells["MaSach"].Value);
 
                     if (db.cn.State == ConnectionState.Closed) db.cn.Open();
                     cmd.ExecuteNonQuery();
